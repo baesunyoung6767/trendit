@@ -34,3 +34,26 @@ export interface DailyTrend {
   trend_date: string; // ISO 문자열 (하루 1 row)
   trends: Trend[];
 }
+
+/** external_link 테이블 */
+export interface ExternalLink {
+  link_id: string;
+  trend_id: string;
+  title: string;
+  link_name: string;
+  created_at: string;
+}
+
+/** trend_search 테이블 */
+export interface TrendSearch {
+  search_id: string;
+  trend_id: string;
+  content: string;
+  created_at: string;
+}
+
+/** 상세 조회 결과: trend와 연결된 외부 링크·검색어 */
+export interface TrendDetail extends Trend {
+  external_link: ExternalLink[];
+  trend_search: TrendSearch[];
+}

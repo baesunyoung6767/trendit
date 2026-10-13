@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { LikesProvider } from "@/components/LikeButton";
 
 export const metadata: Metadata = {
   title: "트렌딧",
@@ -25,7 +26,7 @@ export default function RootLayout({
       {/* 데스크톱/태블릿에선 480px 폰 프레임을 가운데 정렬 (wireframes.md 반응형 전략) */}
       <body className="bg-neutral-200 antialiased">
         <div className="mx-auto flex min-h-screen w-full max-w-[480px] flex-col bg-white">
-          {children}
+          <LikesProvider>{children}</LikesProvider>
         </div>
       </body>
     </html>

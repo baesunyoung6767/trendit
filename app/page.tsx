@@ -18,7 +18,7 @@ export default async function Home() {
 
       <main className="flex-1">
         {/* 큰 날짜 + 주간 날짜 선택기 */}
-        <DateHeader initialDate={daily.trend_date} />
+        <DateHeader />
 
         {/* 오늘의 여우 히어로 카드(한줄평 + 마스코트 + 검색) + 트렌드 피드 */}
         <TodayBoard
