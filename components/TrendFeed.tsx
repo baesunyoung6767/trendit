@@ -17,7 +17,24 @@ export default function TrendFeed({
   trends: Trend[];
   query?: string;
 }) {
-  const [filter, setFilter] = useState<Filter>("all");
+  const [selectedCategories, setSelectedCategories] = useState<CatCode[]>([]);
+  const showAll =
+    selectedCategories.length === 0 ||
+    categories.every((category) => selectedCategories.includes(category.cat_code));
+
+  function toggleFilter(filter: Filter) {
+    setSelectedCategories((current) => {
+      if (filter === "all") return [];
+
+      const next = current.includes(filter)
+        ? current.filter((code) => code !== filter)
+        : [...current, filter];
+
+      return categories.every((category) => next.includes(category.cat_code))
+        ? []
+        : next;
+    });
+  }
 
   // cat_code → Category 매핑 (카드에 색/이름 전달용)
   const catMap = useMemo(
@@ -31,7 +48,7 @@ export default function TrendFeed({
 
   const q = query.trim().toLowerCase();
   const filtered = trends.filter((t) => {
-    const catOk = filter === "all" || t.cat_code === filter;
+    const catOk = showAll || selectedCategories.includes(t.cat_code);
     const qOk =
       !q ||
       t.title.toLowerCase().includes(q) ||
@@ -47,18 +64,21 @@ export default function TrendFeed({
   return (
     <>
       {/* 카테고리 칩 (sticky, 헤더 56px 아래) */}
-      <div className="no-scrollbar sticky top-14 z-10 flex gap-2 overflow-x-auto bg-white px-5 py-2.5">
+      <div className="no-scrollbar sticky top-14 z-30 flex gap-2.5 overflow-x-auto bg-surface px-[34px] py-2">
         {chips.map((chip) => {
-          const active = filter === chip.key;
+          const active = chip.key === "all"
+            ? showAll
+            : !showAll && selectedCategories.includes(chip.key);
           return (
             <button
               key={chip.key}
               type="button"
-              onClick={() => setFilter(chip.key)}
-              className={`shrink-0 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
+              onClick={() => toggleFilter(chip.key)}
+              aria-pressed={active}
+              className={`shrink-0 rounded-full border px-[13px] py-1.5 text-[13px] font-medium transition-colors ${
                 active
-                  ? "border-coral bg-coral text-white"
-                  : "border-[#e5e5e5] bg-white text-ink"
+                  ? "border-brand bg-brand text-ink"
+                  : "border-brand bg-surface text-ink"
               }`}
             >
               {chip.label}
@@ -68,7 +88,7 @@ export default function TrendFeed({
       </div>
 
       {/* 카드 피드 */}
-      <div className="flex flex-col gap-4 px-5 pb-8 pt-3">
+      <div className="flex flex-col gap-11 px-[34px] pb-8 pt-4">
         {filtered.length > 0 ? (
           filtered.map((trend) => (
             <TrendCard

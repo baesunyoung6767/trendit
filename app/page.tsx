@@ -1,5 +1,4 @@
 import Header from "@/components/Header";
-import DateHeader from "@/components/DateHeader";
 import TodayBoard from "@/components/TodayBoard";
 import { getCategories, getTodayTrends } from "@/lib/data";
 
@@ -16,11 +15,8 @@ export default async function Home() {
     <>
       <Header />
 
-      <main className="flex-1">
-        {/* 큰 날짜 + 주간 날짜 선택기 */}
-        <DateHeader />
-
-        {/* 오늘의 여우 히어로 카드(한줄평 + 마스코트 + 검색) + 트렌드 피드 */}
+      <main className="relative z-0 isolate flex-1">
+        {/* 오늘의 트렌드 히어로, 날짜 선택기와 카드 피드 */}
         <TodayBoard
           summary={daily.summary}
           categories={categories}

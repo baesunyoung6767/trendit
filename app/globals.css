@@ -4,15 +4,16 @@
 @import url("https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css");
 @import "tailwindcss";
 
-/* 트렌딧 디자인 토큰 (design/wireframes.md 기준) */
+/* 트렌딧 디자인 토큰 — 옐로 + 차콜 */
 @theme {
-  --color-coral: #ff6f61; /* 대표색 — 로고 / 활성 하트 / CTA */
-  --color-coral-soft: #ffe8e4; /* 코랄 옅은 톤 (말풍선 등) */
-  --color-coral-tint: #ffe1db; /* 히어로 카드 배경 — 살짝 더 코랄 */
-  --color-ink: #1a1a1a; /* 본문 텍스트 */
-  --color-sub: #767676; /* 보조 텍스트 (날짜/메타) */
-  --color-line: #eeeeee; /* 구분선 */
-  --color-bubble: #fafafa; /* 말풍선 배경 */
+  --color-brand: #f2c94c; /* 히어로 / 선택 상태 */
+  --color-brand-soft: #fff3cc; /* 오늘 날짜 / 호버 */
+  --color-surface: #fffcf5; /* 페이지 / 달력 */
+  --color-canvas: #f1eee7; /* 데스크톱 바깥 배경 */
+  --color-ink: #252522; /* 본문 텍스트 */
+  --color-sub: #6b7080; /* 보조 텍스트 (날짜/메타) */
+  --color-line: #e9e4d8; /* 구분선 */
+  --color-bubble: #f7f1e3; /* 말풍선 / 보조 배경 */
 
   --font-sans:
     "NanumSquareRound", -apple-system, BlinkMacSystemFont, "Segoe UI",

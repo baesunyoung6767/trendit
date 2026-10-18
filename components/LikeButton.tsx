@@ -23,15 +23,18 @@ export default function LikeButton({
   const context = useContext(LikesContext);
   if (!context) throw new Error("LikeButton requires LikesProvider");
   const liked = context.likes[trendId] ?? initialLiked;
+  const heartColor = onImage
+    ? liked ? "text-brand" : "text-white"
+    : liked ? "text-brand" : "text-ink";
   return (
     <button
       type="button"
       aria-label={liked ? "좋아요 취소" : "좋아요"}
       aria-pressed={liked}
       onClick={() => context.toggle(trendId, initialLiked)}
-      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-transform active:scale-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral ${onImage ? "drop-shadow" : "hover:bg-bubble"}`}
+      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-transform active:scale-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${onImage ? "drop-shadow" : "hover:bg-bubble"}`}
     >
-      <HeartIcon size={24} filled={liked} className={liked ? "text-coral" : onImage ? "text-white" : "text-ink"} />
+      <HeartIcon size={24} filled={liked} className={heartColor} />
     </button>
   );
 }

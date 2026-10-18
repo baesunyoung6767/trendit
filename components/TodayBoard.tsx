@@ -1,12 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import type { Category, Trend } from "@/lib/types";
+import DateHeader from "./DateHeader";
 import { SearchIcon } from "./icons";
 import TrendFeed from "./TrendFeed";
 
-// 오늘의 여우 히어로 카드(한줄평 + 마스코트 + 검색창) + 트렌드 피드.
-// 검색어(query) 상태를 히어로 카드의 검색창과 카드 피드가 함께 공유한다.
 export default function TodayBoard({
   summary,
   categories,
@@ -20,44 +20,47 @@ export default function TodayBoard({
 
   return (
     <>
-      <section className="px-5 pt-3 pb-6">
-        <div className="relative flex min-h-[184px] flex-col overflow-hidden rounded-3xl bg-coral-tint p-4">
-          {/* 마스코트 여우 — 원형 없이 오른쪽에 자연스럽게 (가장자리에서 크롭) */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/character.png"
-            alt="트렌딧 마스코트 여우"
-            className="pointer-events-none absolute -right-3 bottom-0 w-32 select-none"
-          />
+      <section className="relative h-[309px] overflow-hidden bg-brand px-[34px] pt-[20px]">
+        <Image
+          src="/character-v2.png"
+          alt="트렌딧 마스코트"
+          width={1320}
+          height={1191}
+          priority
+          className="pointer-events-none absolute -right-[88px] -bottom-[18px] w-[340px] max-w-none select-none max-[359px]:-right-[75px] max-[359px]:-bottom-[8px] max-[359px]:w-[260px]"
+        />
 
-          {/* 라벨 + 한줄평 (오른쪽 캐릭터와 안 겹치게 폭 제한) */}
-          <div className="relative z-10 max-w-[60%]">
-            <p className="mb-1 text-[11px] font-medium text-coral">
-              오늘의 여우 한마디
-            </p>
-            <p className="text-[16px] font-bold leading-snug text-ink">
-              {summary}
-            </p>
-          </div>
+        <div className="relative z-10 max-w-[64%] max-[359px]:max-w-[68%]">
+          <h1 className="text-[22px] font-bold leading-tight tracking-tight text-ink">
+            오늘의 트렌드
+          </h1>
+          <p className="mt-3 text-[12px] font-medium text-ink/80">
+            지금 뜨는 이야기를 만나보세요
+          </p>
+          <p className="mt-4 break-keep text-[15px] font-bold leading-[1.45] text-ink max-[359px]:text-[14px]">
+            {summary}
+          </p>
+        </div>
 
-          {/* 검색창 — 카드 하단 */}
-          <div className="relative z-10 mt-auto w-[62%] pt-4">
-            <div className="flex items-center gap-2 rounded-full bg-white px-3.5 py-2 shadow-sm">
-              <SearchIcon size={16} className="shrink-0 text-coral" />
-              <input
-                type="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="오늘의 트렌드 검색"
-                aria-label="오늘의 트렌드 검색"
-                className="w-full bg-transparent text-[13px] text-ink outline-none placeholder:text-sub"
-              />
-            </div>
+        <div className="absolute bottom-[57px] left-[34px] z-10 w-[190px] max-w-[51%] max-[359px]:bottom-9">
+          <div className="flex h-10 items-center gap-2 rounded-full bg-surface px-3 shadow-sm focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ink">
+            <SearchIcon size={16} className="shrink-0 text-ink" />
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="트렌드 검색"
+              aria-label="오늘의 트렌드 검색"
+              className="min-w-0 w-full bg-transparent text-[13px] text-ink outline-none placeholder:text-sub"
+            />
           </div>
         </div>
       </section>
 
-      <TrendFeed categories={categories} trends={trends} query={query} />
+      <div className="relative -mt-8 min-h-[calc(100vh-333px)] rounded-t-[32px] bg-surface pt-1">
+        <DateHeader />
+        <TrendFeed categories={categories} trends={trends} query={query} />
+      </div>
     </>
   );
 }
